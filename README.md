@@ -14,3 +14,8 @@ Gebeta is also known as Alemungula particulary in the Eastern part of Ethiopia. 
 Most mancala games share a common general gameplay. Players begin by placing a certain number of seeds, prescribed for the particular game, in each of the pits on the game board. A player may count their stones to plot the game. A turn consists of removing all seeds from a pit, "sowing" the seeds (placing one in each of the following pits in sequence) and capturing based on the state of the board. The object of the game is to plant the most seeds in the bank. This leads to the English phrase "count and capture" sometimes used to describe the gameplay. Although the details differ greatly, this general sequence applies to all games.
 
 For the particular mancala game called Gebeta, once a player ends up their turn by making one of the pits on their own sides containing exactly four seeds (the count phase), they capture all these pieces. Once captured, the player gets to put the seeds in their own bank. After capturing, the opponent forfeits a turn. This continues until all the seeds end up on the either side of the board. In which case, the player having all the remaining seeds captures all of them and return them to his bank. The winner is the player having more number of seeds in his bank
+
+# Contributors
+1. Petros Beyene Mola - UGR/1308/12
+2. Abdulkarim Getachew - UGR/7992/12
+
