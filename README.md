@@ -19,3 +19,8 @@ For the particular mancala game called Gebeta, once a player ends up their turn 
 1. Petros Beyene Mola - UGR/1308/12
 2. Abdulkarim Getachew - UGR/7992/12
 
+# References
+For more information about the game:
+  1. [Wikipedia - Mancala](https://en.wikipedia.org/wiki/Mancala)
+  2. [WIkipedia - Alemungula](https://en.wikipedia.org/wiki/Alemungula)
+
