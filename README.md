@@ -16,8 +16,8 @@ Most mancala games share a common general gameplay. Players begin by placing a c
 For the particular mancala game called Gebeta, once a player ends up their turn by making one of the pits on their own sides containing exactly four seeds (the count phase), they capture all these pieces. Once captured, the player gets to put the seeds in their own bank. After capturing, the opponent forfeits a turn. This continues until all the seeds end up on the either side of the board. In which case, the player having all the remaining seeds captures all of them and return them to his bank. The winner is the player having more number of seeds in his bank
 
 # Contributors
-1. Petros Beyene Mola - *UGR/1308/12* - *section 1*
-2. Abdulkarim Getachew Mohammed - *UGR/7992/12* - *section 1*
+1. Petros Beyene Mola - *UGR/1308/12* - *Section 1*
+2. Abdulkarim Getachew Mohammed - *UGR/7992/12* - *Section 1*
 
 # References
 For more information about the game:
