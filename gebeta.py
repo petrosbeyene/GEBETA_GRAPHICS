@@ -27,7 +27,7 @@ def displayGame():
 def initBoard():
     """A function to initialize the playing board."""
     for idx in range(12):
-        playing_board.insert(idx, 4)    
+        playing_board.insert(idx, 4)
 
     for idx2 in range(6):
         upside_idx.insert(idx2, idx2)
@@ -35,7 +35,14 @@ def initBoard():
 
 def endGame():
     """A function to mark the end of the game."""
-    pass
+    print(playing_board)
+    if players[current_player][0] > players[1 - current_player][0]:
+        print("Player{} wins".format(current_player + 1))
+    elif players[1 - current_player][0] > players[current_player][0]:
+        print("Player{} wins".format(current_player))
+    elif players[1 - current_player][0] == players[current_player][0]:
+        print("Draw")
+        main()
 
 def main():
     """Main entry of the program."""
@@ -52,11 +59,16 @@ def main():
     elif inp in downside_idx:
         players [current_player].insert(1, downside_idx)
         players [1 - current_player].insert(1, upside_idx)
-    
+
     # Game loop
     while True:
-        if inp not in players[current_player][1]:
-            inp = int(input("Player{} - choose a pit again: ".format(current_player + 1)))
+        templist = [idx + 1 for idx in players[current_player][1]]
+        if inp not in templist:
+            inp = int(input("Player{} - choose a pit again from your side: ".format(current_player + 1)))
+            continue
+
+        if playing_board[inp - 1] == 0:
+            inp = int(input("Player{} - choose a non-zero pit again: ".format(current_player + 1)))
             continue
 
         start_seed = inp - 1
@@ -67,8 +79,6 @@ def main():
             playing_board[start_seed] = 0
             changed_idx.append(start_seed)
             
-            # print(start_seed, end_seed) # debugger line
-            
             for seed_idx in range(start_seed + 1, end_seed + 1):
                 if seed_idx > 11:
                     seed_idx = seed_idx % 12
@@ -76,9 +86,9 @@ def main():
                 playing_board[seed_idx] = playing_board[seed_idx] + 1
                 
             # Debugger lines - to see each step
-            print(playing_board[0:6])
-            print(playing_board[6:12])
-            print()
+            # print(playing_board[0:6])
+            # print(playing_board[6:12])
+            # print()
 
             if playing_board[seed_idx] == 1:
                 current_player = 1 - current_player
@@ -95,25 +105,15 @@ def main():
                 start_seed = seed_idx
                 continue
         
-        # Check the end of the game
-        sideZero = 0
-        asideZero = 0
-        for idx in players[current_player][1]:
-            if playing_board[idx] == 0:
-                sideZero += 1
-        for idx in players[1 - current_player][1]:
-            if playing_board[idx] == 0:
-                asideZero += 1
-        if asideZero == 6 and sideZero < 6:
+        zeroSum = sum(playing_board[players[1 - current_player][1][0]:players[1 - current_player][1][-1] + 1])
+        print("\t", playing_board[players[1 - current_player][1][0]:players[1 -current_player][1][-1] + 1])
+        if zeroSum == 0:
             for seed in playing_board:
-                players[current_player][0] += seed
-                endGame()
-                break
-        elif sideZero == 6 and asideZero < 6:
-            for seed in playing_board:
-                players[1 - current_player] [0] += seed
-                endGame()
-                break
+                players[1 - current_player][0] += seed
+
+            for i in range(12): playing_board[i] = 0
+            endGame()
+            break
 
         # ALGORITHM #9
         for idx in range(12):
@@ -133,4 +133,5 @@ def main():
         inp = int(input("Player{} - choose a pit from {} to {}: "
             .format(current_player + 1, players[current_player][1][0] + 1, players[current_player][1][-1] + 1)))
 
-main()
+if __name__ == "__main__":
+    main()
