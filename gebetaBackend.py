@@ -17,13 +17,6 @@ playing_board = list()
 upside_idx = list()
 downside_idx = list()
 
-def displayGame():
-    """A function to display the game"""
-    print(playing_board[0:6])
-    print(playing_board[6:12])
-    print("Current Player: Player{}".format(current_player + 1), end = "\t")
-    print("\tBank1:",players[0][0],"\tBank2:",players[1][0])
-
 def initBoard():
     """A function to initialize the playing board."""
     for idx in range(12):
@@ -35,21 +28,12 @@ def initBoard():
 
 def endGame():
     """A function to mark the end of the game."""
-    print(playing_board)
-    if players[current_player][0] > players[1 - current_player][0]:
-        print("Player{} wins".format(current_player + 1))
-    elif players[1 - current_player][0] > players[current_player][0]:
-        print("Player{} wins".format(current_player))
-    elif players[1 - current_player][0] == players[current_player][0]:
-        print("Draw")
-        main()
+    pass
 
-def main():
+def main(inp = 1):
     """Main entry of the program."""
     global current_player
     initBoard()
-    print("Starting Player:","Player"+str(current_player + 1))
-    displayGame()
     
     inp = int(input("Choose a pit from 1 to 12: "))
     
@@ -129,7 +113,6 @@ def main():
                         playing_board[idx] = 0
                         continue
 
-        displayGame()
         inp = int(input("Player{} - choose a pit from {} to {}: "
             .format(current_player + 1, players[current_player][1][0] + 1, players[current_player][1][-1] + 1)))
 
