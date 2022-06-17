@@ -88,4 +88,4 @@ class Game():
 
 if __name__ == "__main__":
     d = Data()
-    d.initBoard()
+    d.initBeads()
