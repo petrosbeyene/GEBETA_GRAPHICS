@@ -62,6 +62,8 @@ def main():
 
     # Game loop
     while True:
+        # check validity 
+        # mapper goes here!
         templist = [idx + 1 for idx in players[current_player][1]]
         if inp not in templist:
             inp = int(input("Player{} - choose a pit again from your side: ".format(current_player + 1)))
@@ -83,7 +85,7 @@ def main():
                 if seed_idx > 11:
                     seed_idx = seed_idx % 12
                 changed_idx.append(seed_idx)
-                playing_board[seed_idx] = playing_board[seed_idx] + 1
+                playing_board[seed_idx] = playing_board[seed_idx] + 1 
                 
             # Debugger lines - to see each step
             # print(playing_board[0:6])
@@ -105,6 +107,7 @@ def main():
                 start_seed = seed_idx
                 continue
         
+        # calculate the sum of beads in the sides of the current player
         zeroSum = sum(playing_board[players[1 - current_player][1][0]:players[1 - current_player][1][-1] + 1])
         print("\t", playing_board[players[1 - current_player][1][0]:players[1 -current_player][1][-1] + 1])
         if zeroSum == 0:
