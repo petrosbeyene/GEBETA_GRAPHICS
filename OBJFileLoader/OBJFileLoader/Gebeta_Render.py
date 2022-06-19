@@ -8,10 +8,30 @@ import time
 import tkinter
 from objloader import *
 import logic
-game = logic.Game()
 
-angle = 0
+game = logic.Game()
+brown = (210, 105, 30, 0)
+blue = (0, 0, 128, 0)
+
+def render(angle, zpos, board):
+    glTranslate(0, 0, - zpos)
+    glRotate(90, 0, 0, 1)
+    glRotate(angle, 0, 1, 0)
+    board.render()
+    glTranslate(0, 0, zpos)
+
+def renderText(value, pos, i):
+    font = pygame.font.SysFont('freesansbold.ttf', 40)
+    player_name  = font.render("Player" + str(i) + value, True, brown, blue)
+    text_data = pygame.image.tostring(player_name, "RGBA", True)
+    x, y = pos
+    glWindowPos2d(x, y)
+    glDrawPixels(player_name.get_width(), player_name.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+    pygame.display.flip()
+
+
 def main():
+    angle = 0
     pygame.init()
     viewport = (900,600)
     srf = pygame.display.set_mode(viewport, OPENGL | DOUBLEBUF)
@@ -28,7 +48,7 @@ def main():
     glShadeModel(GL_SMOOTH)
 
     # LOAD OBJECT AFTER PYGAME INIT
-    board = OBJ('../../Gebeta_Board_data/gebeta_board.obj', swapyz=True)
+    board = OBJ('../../GebetaData/gebeta_board.obj', swapyz=True)
     board.loadTexture('../../Texture_Images/timber_light.jpg')
     board.generate()
 
@@ -51,25 +71,11 @@ def main():
     data = logic.Data()
     beadPositionDict = data.getBeads()
 
-    brown = (210, 105, 30, 0)
-    blue = (0, 0, 128, 0)
-
-    # initialState()
+    is_starting = True
     while True:
-        if game.isEndGame == True:
-            end_text = endGame()
-            font = pygame.font.SysFont('freesansbold.ttf', 40)
-            if end_text == "Draw":
-                result_text = font.render("Draw", True, brown, blue)
-            else:
-                result_text = font.render("Winner : " + end_text, True, brown, blue)
-            text_data = pygame.image.tostring(result_text, "RGBA", True)
-            glWindowPos2d(300, 300)
-            glDrawPixels(result_text.get_width(), result_text.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
-            pygame.display.flip()
-            time.sleep(5)
-            popWindow()
-            break
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        glLoadIdentity()
+
         clock.tick(30)
         for e in pygame.event.get():
             if e.type == QUIT:
@@ -85,24 +91,44 @@ def main():
                     game.isValidMove(pos)
                     beadPositionDict = game.dataObj.getBeads()
 
-                elif e.button == 3: move = True
+                elif e.button == 3:
+                    move = True
             elif e.type == MOUSEBUTTONUP:
-                if e.button == 1: rotate = False
-                elif e.button == 3: move = False
+                if e.button == 1:
+                    rotate = False
+                elif e.button == 3:
+                    move = False
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-        glLoadIdentity()
+        if is_starting:
+            render(angle, zpos, board)
+            if angle == 360:
+                is_starting = False
+            angle += 1
 
-        glTranslate(0, 0, - zpos)
-        glRotate(90, 0, 0, 1)
-        glRotate(angle, 0, 1, 0)
-        board.render()
-        glTranslate(0, 0, zpos)
+        elif game.isEndGame == True:
+            end_text = endGame()
+            font = pygame.font.SysFont('freesansbold.ttf', 40)
+            print(end_text)
+            if end_text == "Draw":
+                result_text = font.render("Draw", True, brown, blue)
+            else:
+                result_text = font.render("Winner : " + end_text, True, brown, blue)
+            text_data = pygame.image.tostring(result_text, "RGBA", True)
+            glWindowPos2d(300, 300)
+            glDrawPixels(result_text.get_width(), result_text.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
+            pygame.display.flip()
+            time.sleep(5)
+            break
+
+        else:
+            render(angle, zpos, board)
+
 
         for location in beadPositionDict.values():
             glTranslate(location[0], location[1], - zpos + location[2])
             bead.render()
             glTranslate(-location[0], -location[1], zpos - location[2])
+
 
         pygame.display.flip()
 
@@ -116,29 +142,5 @@ def endGame():
     elif game.player1.getBank() == game.player2.getBank():
         return 'Draw'
 
-def popWindow():
-    popWin = tkinter.Tk()
-    popWin.geometry("300x200")
-
-    play_button = tkinter.Button(popWin, text = "Play again", command=mainCaller())
-    play_button.pack(side = tkinter.RIGHT)
-    quit_button = tkinter.Button(popWin, text = "Quit", command = sys.quit())
-    quit_button.pack(side = tkinter.LEFT)
-    popWin.mainloop()
-
-def mainCaller():
+if __name__ == "__main__":
     main()
-
-# def initialState():
-#     start = tkinter.Tk()
-#     start.geometry("100X100")
-#     start_button = tkinter.Button(start, text = "Start", command = callMain())
-#     start_button.pack()
-#
-# def callMain():
-#     global angle
-#     angle = 0
-#
-main()
-# initialState()
-
