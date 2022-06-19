@@ -112,7 +112,7 @@ def main():
             if end_text == "Draw":
                 result_text = font.render("Draw", True, brown, blue)
             else:
-                result_text = font.render("Winner : " + end_text, True, brown, blue)
+                result_text = font.render("Winner : " + end_text[1] + end_text[0], True, brown, blue)
             text_data = pygame.image.tostring(result_text, "RGBA", True)
             glWindowPos2d(300, 300)
             glDrawPixels(result_text.get_width(), result_text.get_height(), GL_RGBA, GL_UNSIGNED_BYTE, text_data)
@@ -136,9 +136,9 @@ def main():
 
 def endGame():
     if game.player1.getBank() > game.player2.getBank():
-        return game.player1.name
+        return game.player1.name, 'Player 1: '
     elif game.player2.getBank() > game.player1.getBank():
-        return game.player2.name
+        return game.player2.name, 'Player 2: '
     elif game.player1.getBank() == game.player2.getBank():
         return 'Draw'
 
