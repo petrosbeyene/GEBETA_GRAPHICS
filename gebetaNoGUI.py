@@ -22,7 +22,7 @@ def displayGame():
     print(playing_board[0:6])
     print(playing_board[6:12])
     print("Current Player: Player{}".format(current_player + 1), end = "\t")
-    print("\tBank1:",players[0][0],"\tBank2:",players[1][0])
+    print(f"\tBank1: {players[0][0]} \tBank2: {players[1][0]}")
 
 def initBoard():
     """A function to initialize the playing board."""
